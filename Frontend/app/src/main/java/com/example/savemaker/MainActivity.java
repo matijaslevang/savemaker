@@ -1,15 +1,13 @@
 package com.example.savemaker;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,10 +15,15 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.savemaker.databinding.ActivityMainBinding;
+import com.example.savemaker.transactions.models.Category;
 import com.example.savemaker.utils.ClientUtils;
 import com.google.android.material.navigation.NavigationView;
 
-import java.lang.reflect.Field;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,31 +33,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ClientUtils.init();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarMain.toolbar);
 
+
+
+        WindowInsetsController controller = getWindow().getInsetsController();
+        if (controller != null) {
+            controller.hide(WindowInsets.Type.statusBars());
+            controller.setSystemBarsBehavior(
+                    WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            );
+        }
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-
-        try {
-            java.lang.reflect.Field mDragger = drawer.getClass().getDeclaredField("mLeftDragger");
-            mDragger.setAccessible(true);
-            Object draggerObj = mDragger.get(drawer);
-
-            java.lang.reflect.Field mEdgeSize = draggerObj.getClass().getDeclaredField("mEdgeSize");
-            mEdgeSize.setAccessible(true);
-            int edgeSize = mEdgeSize.getInt(draggerObj);
-
-            int newEdgeSize = (int) (getResources().getDisplayMetrics().widthPixels * 0.2); // 20% of screen width
-            mEdgeSize.setInt(draggerObj, newEdgeSize);
-            Log.d("DrawerEdge", "Edge size increased from " + edgeSize + " to " + newEdgeSize);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         EdgeToEdge.enable(this);
 
