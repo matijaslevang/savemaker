@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.savemaker.R;
 import com.example.savemaker.animations.AnimatedCircleView;
 import com.example.savemaker.databinding.FragmentHomeBinding;
+import com.example.savemaker.transactions.adapters.TransactionsAdapter;
 import com.example.savemaker.transactions.dialogs.TransactionCreationDialog;
 import com.example.savemaker.transactions.models.Category;
 import com.example.savemaker.transactions.models.CreateTransaction;
@@ -37,8 +39,8 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-
-    private List<Category> allCategories;
+    private List<Transaction> recentThreeTransactions = new ArrayList<>();
+    private TransactionsAdapter transactionsAdapter;
 
     public HomeFragment() { }
 
@@ -53,6 +55,13 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
 
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
+
+        transactionsAdapter = new TransactionsAdapter(requireContext(), recentThreeTransactions);
+        binding.recentTransactionsRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.recentTransactionsRecycler.setAdapter(transactionsAdapter);
+
+        loadData();
+
         return binding.getRoot();
     }
 
@@ -69,25 +78,6 @@ public class HomeFragment extends Fragment {
         View leftButton = binding.leftButton;
         View rightButton = binding.rightButton;
 
-        Call<List<Category>> call = ClientUtils.categoryService.getAll();
-        call.enqueue(
-                new Callback<List<Category>>() {
-                    @Override
-                    public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                        if (response.isSuccessful()) {
-                            ClientUtils.allCategories = response.body();
-                        } else {
-                            Log.e("HomeFragment", "Unsuccessful response: " + response.code());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Category>> call, Throwable t) {
-                        Toast.makeText(getContext(), "Error loading categories!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
         leftButton.setOnClickListener(v -> {
             TransactionCreationDialog dialog = new TransactionCreationDialog(
                     getContext(),
@@ -99,7 +89,12 @@ public class HomeFragment extends Fragment {
                                 new Callback<Transaction>() {
                                     @Override
                                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {
-                                        // TODO: add into most recent, and subtract from total balance
+                                        // TODO: subtract from total balance
+                                        if (recentThreeTransactions.size() == 3) {
+                                            recentThreeTransactions.remove(recentThreeTransactions.size() - 1);
+                                        }
+                                        recentThreeTransactions.add(0, response.body());
+                                        transactionsAdapter.notifyDataSetChanged();
                                         Toast.makeText(getContext(), "Expense added successfully!", Toast.LENGTH_SHORT).show();
                                     }
 
@@ -125,7 +120,12 @@ public class HomeFragment extends Fragment {
                                 new Callback<Transaction>() {
                                     @Override
                                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {
-                                        // TODO: add into most recent, and add to total balance
+                                        // TODO: add to total balance
+                                        if (recentThreeTransactions.size() == 3) {
+                                            recentThreeTransactions.remove(recentThreeTransactions.size() - 1);
+                                        }
+                                        recentThreeTransactions.add(0, response.body());
+                                        transactionsAdapter.notifyDataSetChanged();
                                         Toast.makeText(getContext(), "Income added successfully!", Toast.LENGTH_SHORT).show();
                                     }
 
@@ -139,8 +139,6 @@ public class HomeFragment extends Fragment {
             );
             dialog.show();
         });
-
-
     }
 
     private void animateBalance(TextView balanceTextView, float finalAmount, String currencySymbol) {
@@ -155,5 +153,45 @@ public class HomeFragment extends Fragment {
         });
 
         animator.start();
+    }
+
+    private void loadData() {
+        Call<List<Category>> call = ClientUtils.categoryService.getAll();
+        call.enqueue(
+                new Callback<List<Category>>() {
+                    @Override
+                    public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                        if (response.isSuccessful()) {
+                            ClientUtils.allCategories = response.body();
+                        } else {
+                            Log.e("HomeFragment", "Unsuccessful response: " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Category>> call, Throwable t) {
+                        Toast.makeText(getContext(), "Error loading categories!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
+        Call<List<Transaction>> call2 = ClientUtils.transactionService.getThreeNewest();
+        call2.enqueue(
+                new Callback<List<Transaction>>() {
+                    @Override
+                    public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
+                        if (response.isSuccessful()) {
+                            recentThreeTransactions.clear();
+                            recentThreeTransactions.addAll(response.body());
+                            transactionsAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Transaction>> call, Throwable t) {
+
+                    }
+                }
+        );
     }
 }
