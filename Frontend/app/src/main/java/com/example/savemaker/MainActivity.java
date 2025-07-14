@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home
+                R.id.nav_home,
+                R.id.nav_reports
         ).setOpenableLayout(drawer).build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

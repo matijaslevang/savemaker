@@ -61,4 +61,6 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-jackson:2.3.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.0")
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation ("com.google.android.material:material:1.12.0")
 }

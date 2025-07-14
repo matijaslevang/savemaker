@@ -12,7 +12,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findTop3ByOrderByIdDesc();
 
     @Query("SELECT t FROM Transaction t WHERE (:categoryId IS NULL OR t.category.id = :categoryId) " +
-            "AND t.date BETWEEN :startDate AND :endDate")
+            "AND t.date BETWEEN :startDate AND :endDate ORDER BY t.date DESC")
     List<Transaction> getAll(@Param("categoryId") Long categoryId,
                              @Param("startDate") LocalDate startDate,
                              @Param("endDate") LocalDate endDate);

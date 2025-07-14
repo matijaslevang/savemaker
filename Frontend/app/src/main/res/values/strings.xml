@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Savemaker</string>
     <string name="home">Home</string>
+    <string name="reports">Reports</string>
 
     <string name="total">Total</string>
     <string name="recent_transactions">Recent transactions</string>
@@ -22,6 +23,9 @@
     <string name="date_colon">Date:</string>
     <string name="amount_colon">Amount:</string>
     <string name="category_colon">Category:</string>
+
+    <string name="from_colon">From:</string>
+    <string name="to_colon">To:</string>
     <!-- menu labels -->
     <string name="menu_home">Home</string>
 </resources>

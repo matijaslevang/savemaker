@@ -11,4 +11,11 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
+    <fragment
+        android:id="@+id/nav_reports"
+        android:name="com.example.savemaker.reports.ReportsFragment"
+        android:label="@string/reports"
+        tools:layout="@layout/fragment_reports"
+        />
+
 </navigation>
