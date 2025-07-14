@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.savemaker.R;
+import com.example.savemaker.transactions.dialogs.TransactionDetailsDialog;
 import com.example.savemaker.transactions.models.Transaction;
 
 import java.text.SimpleDateFormat;
@@ -74,8 +75,14 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
             amount = itemView.findViewById(R.id.transaction_view_holder_amount);
             category = itemView.findViewById(R.id.transaction_view_holder_category_name);
             itemView.setOnClickListener(v -> {
-                // TODO: open details dialog
-                Toast.makeText(itemView.getContext(), "Clicked", Toast.LENGTH_SHORT).show();
+                TransactionDetailsDialog dialog = new TransactionDetailsDialog(
+                        itemView.getContext(),
+                        date.getText().toString(),
+                        notes,
+                        amount.getText().toString(),
+                        category.getText().toString()
+                );
+                dialog.show();
             });
         }
     }

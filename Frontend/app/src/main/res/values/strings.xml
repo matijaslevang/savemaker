@@ -17,6 +17,11 @@
     <string name="enter_amount">Enter amount</string>
     <string name="add_note">Add note here…</string>
     <string name="note">Note</string>
+
+    <string name="details">Details</string>
+    <string name="date_colon">Date:</string>
+    <string name="amount_colon">Amount:</string>
+    <string name="category_colon">Category:</string>
     <!-- menu labels -->
     <string name="menu_home">Home</string>
 </resources>
