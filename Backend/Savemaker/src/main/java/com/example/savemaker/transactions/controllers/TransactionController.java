@@ -1,5 +1,6 @@
 package com.example.savemaker.transactions.controllers;
 
+import com.example.savemaker.balance.services.BalanceService;
 import com.example.savemaker.transactions.dtos.CreateTransactionDTO;
 import com.example.savemaker.transactions.dtos.TransactionDTO;
 import com.example.savemaker.transactions.models.Transaction;
@@ -21,6 +22,9 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
+    @Autowired
+    private BalanceService balanceService;
+
     @GetMapping(value = "/recent", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TransactionDTO>> getRecent() {
         List<Transaction> recentThree = transactionService.getThreeMostRecent();
@@ -34,6 +38,7 @@ public class TransactionController {
         if (createdTransaction == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        balanceService.applyTransaction(balanceService.getMainBalance(1L), createdTransaction);
         return new ResponseEntity<>(createdTransaction, HttpStatus.CREATED);
     }
 
