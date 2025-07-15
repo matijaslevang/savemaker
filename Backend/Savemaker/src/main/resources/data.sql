@@ -26,3 +26,14 @@ INSERT INTO transactions (amount, date, notes, category_id) VALUES
                                                                 (60.00, '2025-04-08', 'Groceries', 3),
                                                                 (95.00, '2025-04-10', 'Internet bill', 4),
                                                                 (40.00, '2025-04-12', 'Dinner out', 5);
+
+INSERT INTO income_type_balances (id, category_id, balance) VALUES
+                                                            (DEFAULT,1, 50000.00),
+                                                            (DEFAULT, 2, 20000.00);
+
+INSERT INTO main_balances (total_balance) VALUES
+    (70000.00);
+
+INSERT INTO income_type_balance_fk_table (main_balance_id, income_type_balance_id) VALUES
+                                                                                       (1, 1),
+                                                                                       (1, 2);
