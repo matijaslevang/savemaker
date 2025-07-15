@@ -41,6 +41,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private List<Transaction> recentThreeTransactions = new ArrayList<>();
     private TransactionsAdapter transactionsAdapter;
+    private Double totalBalance = 0.0;
 
     public HomeFragment() { }
 
@@ -60,8 +61,6 @@ public class HomeFragment extends Fragment {
         binding.recentTransactionsRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recentTransactionsRecycler.setAdapter(transactionsAdapter);
 
-        loadData();
-
         return binding.getRoot();
     }
 
@@ -69,11 +68,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AnimatedCircleView circleView = binding.animatedCircle;
-        circleView.post(circleView::startAnimation);
-
-        TextView balanceView = binding.balance;
-        animateBalance(balanceView, 99999.99f, "RSD");
+        loadData();
 
         View leftButton = binding.leftButton;
         View rightButton = binding.rightButton;
@@ -89,7 +84,9 @@ public class HomeFragment extends Fragment {
                                 new Callback<Transaction>() {
                                     @Override
                                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {
-                                        // TODO: subtract from total balance
+                                        float totalBeforeChange = totalBalance.floatValue();
+                                        totalBalance -= amount;
+                                        drawBalance(totalBeforeChange);
                                         if (recentThreeTransactions.size() == 3) {
                                             recentThreeTransactions.remove(recentThreeTransactions.size() - 1);
                                         }
@@ -120,7 +117,9 @@ public class HomeFragment extends Fragment {
                                 new Callback<Transaction>() {
                                     @Override
                                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {
-                                        // TODO: add to total balance
+                                        float totalBeforeChange = totalBalance.floatValue();
+                                        totalBalance += amount;
+                                        drawBalance(totalBeforeChange);
                                         if (recentThreeTransactions.size() == 3) {
                                             recentThreeTransactions.remove(recentThreeTransactions.size() - 1);
                                         }
@@ -141,8 +140,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void animateBalance(TextView balanceTextView, float finalAmount, String currencySymbol) {
-        ValueAnimator animator = ValueAnimator.ofFloat(0f, finalAmount);
+    private void animateBalance(TextView balanceTextView, float beginningAmount, float finalAmount, String currencySymbol) {
+        ValueAnimator animator = ValueAnimator.ofFloat(beginningAmount, finalAmount);
         animator.setDuration(800);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
 
@@ -193,5 +192,36 @@ public class HomeFragment extends Fragment {
                     }
                 }
         );
+
+        Call<Double> call3 = ClientUtils.balanceService.getMainBalance();
+        call3.enqueue(
+                new Callback<Double>() {
+                    @Override
+                    public void onResponse(Call<Double> call, Response<Double> response) {
+                        if (response.isSuccessful()) {
+                            totalBalance = response.body();
+                            drawCircle();
+                            drawBalance(0f);
+                        } else {
+                            Log.e("Balance", "Bad request: balance");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Double> call, Throwable t) {
+                        Log.e("Balance", "Connection error: balance");
+                    }
+                }
+        );
+    }
+
+    private void drawCircle() {
+        AnimatedCircleView circleView = binding.animatedCircle;
+        circleView.post(circleView::startAnimation);
+    }
+
+    private void drawBalance(float currentAmount) {
+        TextView balanceView = binding.balance;
+        animateBalance(balanceView, currentAmount, totalBalance.floatValue(), "RSD");
     }
 }
