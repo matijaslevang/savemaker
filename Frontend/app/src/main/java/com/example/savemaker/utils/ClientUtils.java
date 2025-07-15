@@ -3,6 +3,7 @@ package com.example.savemaker.utils;
 import android.content.Context;
 
 import com.example.savemaker.BuildConfig;
+import com.example.savemaker.balance.services.BalanceService;
 import com.example.savemaker.transactions.models.Category;
 import com.example.savemaker.transactions.services.CategoryService;
 import com.example.savemaker.transactions.services.TransactionService;
@@ -25,6 +26,7 @@ public class ClientUtils {
     public static List<Category> allCategories;
     public static TransactionService transactionService;
     public static CategoryService categoryService;
+    public static BalanceService balanceService;
 
     public static void init() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -39,6 +41,7 @@ public class ClientUtils {
 
         transactionService = httpClient.create(TransactionService.class);
         categoryService = httpClient.create(CategoryService.class);
+        balanceService = httpClient.create(BalanceService.class);
     }
 
     private static OkHttpClient makeClient(){
