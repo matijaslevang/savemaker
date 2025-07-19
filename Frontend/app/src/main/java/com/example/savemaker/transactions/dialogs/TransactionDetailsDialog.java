@@ -48,11 +48,17 @@ public class TransactionDetailsDialog extends Dialog implements View.OnClickList
         TextView amountTextView = findViewById(R.id.details_amount);
         TextView categoryNameTextView = findViewById(R.id.details_category_name);
         TextView noteTextView = findViewById(R.id.details_note);
+        TextView noteLabel = findViewById(R.id.details_note_label);
 
         dateTextView.setText(date);
         amountTextView.setText(amount);
         categoryNameTextView.setText(categoryName);
         noteTextView.setText(notes);
+
+        if (notes.isEmpty()) {
+            noteTextView.setVisibility(View.GONE);
+            noteLabel.setVisibility(View.GONE);
+        }
 
     }
 
