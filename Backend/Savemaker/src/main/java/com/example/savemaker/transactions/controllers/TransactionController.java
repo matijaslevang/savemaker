@@ -1,5 +1,6 @@
 package com.example.savemaker.transactions.controllers;
 
+import com.example.savemaker.balance.models.MainBalance;
 import com.example.savemaker.balance.services.BalanceService;
 import com.example.savemaker.transactions.dtos.CreateTransactionDTO;
 import com.example.savemaker.transactions.dtos.TransactionDTO;
@@ -38,7 +39,10 @@ public class TransactionController {
         if (createdTransaction == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        balanceService.applyTransaction(balanceService.getMainBalance(1L), createdTransaction);
+        MainBalance newBalance = balanceService.applyTransaction(balanceService.getMainBalance(1L), createdTransaction);
+        if (newBalance == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(createdTransaction, HttpStatus.CREATED);
     }
 
