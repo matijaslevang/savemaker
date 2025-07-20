@@ -79,6 +79,7 @@ public class HomeFragment extends Fragment {
                     getChildFragmentManager(),
                     ClientUtils.allCategories.stream().filter(category -> !category.getUsedForIncome()).collect(Collectors.toList()),
                     false,
+                    totalBalance,
                     (amount, notes, date, categoryId) -> {
                         ClientUtils.transactionService.create(new CreateTransaction(date, amount, notes, categoryId)).enqueue(
                                 new Callback<Transaction>() {
@@ -98,6 +99,7 @@ public class HomeFragment extends Fragment {
                                     @Override
                                     public void onFailure(Call<Transaction> call, Throwable t) {
                                         Toast.makeText(getContext(), "Error adding expense!", Toast.LENGTH_SHORT).show();
+                                        Log.wtf("asd", t);
                                     }
                                 }
                         );
@@ -112,6 +114,7 @@ public class HomeFragment extends Fragment {
                     getChildFragmentManager(),
                     ClientUtils.allCategories.stream().filter(category -> category.getUsedForIncome()).collect(Collectors.toList()),
                     true,
+                    totalBalance,
                     (amount, notes, date, categoryId) -> {
                         ClientUtils.transactionService.create(new CreateTransaction(date, amount, notes, categoryId)).enqueue(
                                 new Callback<Transaction>() {

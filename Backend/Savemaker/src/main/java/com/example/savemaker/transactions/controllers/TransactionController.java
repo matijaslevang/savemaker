@@ -1,9 +1,13 @@
 package com.example.savemaker.transactions.controllers;
 
+import com.example.savemaker.balance.models.MainBalance;
+import com.example.savemaker.balance.models.SpendingDetails;
 import com.example.savemaker.balance.services.BalanceService;
 import com.example.savemaker.transactions.dtos.CreateTransactionDTO;
 import com.example.savemaker.transactions.dtos.TransactionDTO;
+import com.example.savemaker.transactions.models.Category;
 import com.example.savemaker.transactions.models.Transaction;
+import com.example.savemaker.transactions.services.CategoryService;
 import com.example.savemaker.transactions.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,6 +28,8 @@ public class TransactionController {
 
     @Autowired
     private BalanceService balanceService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping(value = "/recent", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TransactionDTO>> getRecent() {
@@ -33,13 +39,18 @@ public class TransactionController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Transaction> create(@RequestBody CreateTransactionDTO transaction) {
-        Transaction createdTransaction = transactionService.create(transaction);
+    public ResponseEntity<TransactionDTO> create(@RequestBody CreateTransactionDTO transaction) {
+        Category category = categoryService.getCategory(transaction.getCategoryId());
+        List<SpendingDetails> spendingDetails = balanceService.applyTransaction(balanceService.getMainBalance(1L), transaction.getAmount(), category);
+        if (spendingDetails == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Transaction createdTransaction = transactionService.create(transaction, spendingDetails, category);
         if (createdTransaction == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        balanceService.applyTransaction(balanceService.getMainBalance(1L), createdTransaction);
-        return new ResponseEntity<>(createdTransaction, HttpStatus.CREATED);
+
+        return new ResponseEntity<>(new TransactionDTO(createdTransaction), HttpStatus.CREATED);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

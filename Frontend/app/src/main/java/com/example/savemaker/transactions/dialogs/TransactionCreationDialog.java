@@ -44,15 +44,17 @@ public class TransactionCreationDialog extends Dialog implements View.OnClickLis
     private Boolean isUsedForIncome;
     private FragmentManager fragmentManager;
     private Context context;
+    private Double totalBalance;
 
 
-    public TransactionCreationDialog(@NonNull Context context, FragmentManager fragmentManager, List<Category> categories, Boolean isUsedForIncome, TransactionCreationDataListener callback) {
+    public TransactionCreationDialog(@NonNull Context context, FragmentManager fragmentManager, List<Category> categories, Boolean isUsedForIncome, Double totalBalance, TransactionCreationDataListener callback) {
         super(context);
         this.context = context;
         this.isUsedForIncome = isUsedForIncome;
         this.fragmentManager = fragmentManager;
         this.categories = categories;
         this.callback = callback;
+        this.totalBalance = totalBalance;
     }
 
     @Override
@@ -127,13 +129,17 @@ public class TransactionCreationDialog extends Dialog implements View.OnClickLis
                 LocalDate date = LocalDate.parse(datePicker.getText().toString(), java.time.format.DateTimeFormatter.ofPattern("dd. MM. yyyy."));
                 Category category = (Category) categoryPicker.getSelectedItem();
 
-                if (amount > 0.0) {
-                    if (callback != null) {
-                        callback.onDataReceived(amount, notes, date, category.getId());
-                    }
-                    dismiss();
+                if (amount > totalBalance && !isUsedForIncome) {
+                    Toast.makeText(context, "You don't have enough money to make that transaction!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, "Amount must be bigger than 0!", Toast.LENGTH_SHORT).show();
+                    if (amount > 0.0) {
+                        if (callback != null) {
+                            callback.onDataReceived(amount, notes, date, category.getId());
+                        }
+                        dismiss();
+                    } else {
+                        Toast.makeText(context, "Amount must be bigger than 0!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

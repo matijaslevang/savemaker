@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.savemaker.R;
 import com.example.savemaker.databinding.FragmentSimpleReportBinding;
@@ -98,15 +99,16 @@ public class SimpleReportFragment extends Fragment {
     }
 
     private void attemptFetch() {
+        transactions.clear();
+        adapter.notifyDataSetChanged();
         if (beginningDate != null && endingDate != null) {
-            if (beginningDate.isBefore(endingDate)) {
+            if (beginningDate.isBefore(endingDate) || beginningDate.isEqual(endingDate)) {
                 Call<List<Transaction>> call = ClientUtils.transactionService.getAll(null, beginningDate, endingDate);
                 call.enqueue(
                         new Callback<List<Transaction>>() {
                             @Override
                             public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
                                 if (response.isSuccessful() && response.body() != null) {
-                                    transactions.clear();
                                     transactions.addAll(response.body());
                                     adapter.notifyDataSetChanged();
                                 }
@@ -118,6 +120,8 @@ public class SimpleReportFragment extends Fragment {
                             }
                         }
                 );
+            } else {
+                Toast.makeText(requireContext(), "The end date must be after the beginning date!", Toast.LENGTH_SHORT).show();
             }
         }
     }

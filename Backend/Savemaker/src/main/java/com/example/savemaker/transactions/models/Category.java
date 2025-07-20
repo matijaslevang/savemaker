@@ -16,13 +16,11 @@ public class Category {
     @Column(nullable = false)
     private Boolean isUsedForIncome;
 
-    public Category() {}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "preferred_spending_category_id", referencedColumnName = "id")
+    private Category preferredSpendingCategory;
 
-    public Category(Long id, String name, Boolean isUsedForIncome) {
-        this.id = id;
-        this.name = name;
-        this.isUsedForIncome = isUsedForIncome;
-    }
+    public Category() {}
 
     public Long getId() {
         return id;
@@ -46,5 +44,13 @@ public class Category {
 
     public void setUsedForIncome(Boolean usedForIncome) {
         isUsedForIncome = usedForIncome;
+    }
+
+    public Category getPreferredSpendingCategory() {
+        return preferredSpendingCategory;
+    }
+
+    public void setPreferredSpendingCategory(Category preferredSpendingCategory) {
+        this.preferredSpendingCategory = preferredSpendingCategory;
     }
 }

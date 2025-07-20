@@ -1,39 +1,89 @@
-INSERT INTO categories (name, is_used_for_income) VALUES
-                                                      ('Salary', true),
-                                                      ('Freelance', true),
-                                                      ('Groceries', false),
-                                                      ('Utilities', false),
-                                                      ('Entertainment', false);
-
-INSERT INTO transactions (amount, date, notes, category_id) VALUES
-                                                                (1500.00, '2025-07-01', 'Monthly salary', 1),
-                                                                (800.50, '2025-07-05', 'Freelance project', 2),
-                                                                (75.30, '2025-07-06', 'Supermarket shopping', 3),
-                                                                (120.00, '2025-07-07', 'Electricity bill', 4),
-                                                                (50.00, '2025-07-08', 'Movie night', 5),
-                                                                (1500.00, '2025-06-01', 'Monthly salary', 1),
-                                                                (400.00, '2025-06-10', 'Freelance design work', 2),
-                                                                (100.00, '2025-06-12', 'Groceries', 3),
-                                                                (90.00, '2025-06-15', 'Water bill', 4),
-                                                                (30.00, '2025-06-18', 'Concert ticket', 5),
-                                                                (1600.00, '2025-05-01', 'Monthly salary', 1),
-                                                                (750.00, '2025-05-03', 'Freelance writing', 2),
-                                                                (80.00, '2025-05-05', 'Grocery store', 3),
-                                                                (110.00, '2025-05-07', 'Gas bill', 4),
-                                                                (45.00, '2025-05-10', 'Video games', 5),
-                                                                (1550.00, '2025-04-01', 'Monthly salary', 1),
-                                                                (900.00, '2025-04-06', 'Freelance project', 2),
-                                                                (60.00, '2025-04-08', 'Groceries', 3),
-                                                                (95.00, '2025-04-10', 'Internet bill', 4),
-                                                                (40.00, '2025-04-12', 'Dinner out', 5);
-
+INSERT INTO categories (id, name, is_used_for_income, preferred_spending_category_id) VALUES
+                                                                                          (DEFAULT, 'Salary', true, NULL),
+                                                                                          (DEFAULT, 'Freelance', true, NULL),
+                                                                                          (DEFAULT, 'Food', false, 1),
+                                                                                          (DEFAULT, 'Transport', false, 1),
+                                                                                          (DEFAULT, 'Entertainment', false, 2);
 INSERT INTO income_type_balances (id, category_id, balance) VALUES
-                                                            (DEFAULT,1, 50000.00),
-                                                            (DEFAULT, 2, 20000.00);
+                                                                (DEFAULT, 1, 3000.00),
+                                                                (DEFAULT, 2, 1500.00);
 
-INSERT INTO main_balances (total_balance) VALUES
-    (70000.00);
+INSERT INTO main_balances (id, total_balance) VALUES
+    (1, 4500.00);
 
 INSERT INTO income_type_balance_fk_table (main_balance_id, income_type_balance_id) VALUES
                                                                                        (1, 1),
                                                                                        (1, 2);
+
+INSERT INTO spending_details (id, category_id, amount) VALUES
+                                                           (DEFAULT, 1, 200.00),
+                                                           (DEFAULT, 2, 150.00),
+                                                           (DEFAULT, 1, 75.50),
+                                                           (DEFAULT, 2, 300.00),
+                                                           (DEFAULT, 1, 100.00),
+                                                           (DEFAULT, 2, 250.00),
+                                                           (DEFAULT, 1, 180.00),
+                                                           (DEFAULT, 2, 120.00),
+                                                           (DEFAULT, 1, 90.00),
+                                                           (DEFAULT, 2, 80.00),
+                                                           (DEFAULT, 1, 110.00),
+                                                           (DEFAULT, 2, 60.00),
+                                                           (DEFAULT, 1, 95.00),
+                                                           (DEFAULT, 2, 130.00),
+                                                           (DEFAULT, 1, 85.00),
+                                                           (DEFAULT, 1, 160.00),
+                                                           (DEFAULT, 2, 140.00),
+                                                           (DEFAULT, 1, 210.00),
+                                                           (DEFAULT, 2, 190.00),
+                                                           (DEFAULT, 1, 155.00),
+                                                           (DEFAULT, 2, 170.00),
+                                                           (DEFAULT, 1, 135.00),
+                                                           (DEFAULT, 2, 145.00),
+                                                           (DEFAULT, 1, 165.00),
+                                                           (DEFAULT, 2, 185.00);
+
+INSERT INTO transactions (id, date, notes, category_id) VALUES
+                                                            (DEFAULT, '2025-07-01', 'Groceries', 3),
+                                                            (DEFAULT, '2025-07-02', 'Train', 4),
+                                                            (DEFAULT, '2025-07-03', 'Cinema', 5),
+                                                            (DEFAULT, '2025-07-04', 'Lunch', 3),
+                                                            (DEFAULT, '2025-07-05', 'Bus fare', 4),
+                                                            (DEFAULT, '2025-07-06', 'Games', 5),
+                                                            (DEFAULT, '2025-07-07', 'Snacks', 3),
+                                                            (DEFAULT, '2025-07-08', 'Fuel', 4),
+                                                            (DEFAULT, '2025-07-09', 'Music event', 5),
+                                                            (DEFAULT, '2025-07-10', 'Breakfast', 3),
+                                                            (DEFAULT, '2025-07-11', 'Taxi', 4),
+                                                            (DEFAULT, '2025-07-12', 'Online subscription', 5),
+                                                            (DEFAULT, '2025-07-13', 'Coffee', 3),
+                                                            (DEFAULT, '2025-07-14', 'Uber', 4),
+                                                            (DEFAULT, '2025-07-15', 'Dinner', 3);
+
+INSERT INTO spending_details_transaction_table (transaction_id, spending_details_id) VALUES
+                                                                                         (1, 1),
+                                                                                         (2, 2),
+                                                                                         (3, 3),
+                                                                                         (4, 4),
+                                                                                         (5, 5),
+                                                                                         (6, 6),
+                                                                                         (7, 7),
+                                                                                         (8, 8),
+                                                                                         (8, 17),
+                                                                                         (9, 9),
+                                                                                         (9, 18),
+                                                                                         (10, 10),
+                                                                                         (10, 19),
+                                                                                         (11, 11),
+                                                                                         (11, 20),
+                                                                                         (12, 12),
+                                                                                         (12, 21),
+                                                                                         (13, 13),
+                                                                                         (13, 22),
+                                                                                         (14, 14),
+                                                                                         (14, 23),
+                                                                                         (15, 15),
+                                                                                         (15, 24);
+
+
+
+

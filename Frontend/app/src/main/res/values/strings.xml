@@ -25,6 +25,7 @@
     <string name="date_colon">Date:</string>
     <string name="amount_colon">Amount:</string>
     <string name="category_colon">Category:</string>
+    <string name="note_colon">Note:</string>
 
     <string name="from_colon">From:</string>
     <string name="to_colon">To:</string>
