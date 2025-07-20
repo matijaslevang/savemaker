@@ -11,6 +11,12 @@
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
 
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+
+    <string name="income_categories">Income categories</string>
+    <string name="expense_categories">Expense categories</string>
+
     <string name="dialog_title_income">Add income</string>
     <string name="dialog_title_expense">Add expense</string>
     <string name="category">Category</string>
