@@ -71,4 +71,8 @@ public class Transaction {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public Double getTotalAmount() {
+        return this.spendingDetails.stream().mapToDouble(SpendingDetails::getAmount).sum();
+    }
 }
