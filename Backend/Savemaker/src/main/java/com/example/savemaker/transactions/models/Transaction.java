@@ -1,8 +1,10 @@
 package com.example.savemaker.transactions.models;
 
+import com.example.savemaker.balance.models.SpendingDetails;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table (name = "transactions")
@@ -12,8 +14,11 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Double amount;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "spending_details_transaction_table",
+               joinColumns = @JoinColumn(name = "transaction_id"),
+               inverseJoinColumns = @JoinColumn(name = "spending_details_id"))
+    private List<SpendingDetails> spendingDetails;
 
     @Column(nullable = false)
     private LocalDate date;
@@ -27,14 +32,6 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(Long id, Double amount, LocalDate date, String notes, Category category) {
-        this.id = id;
-        this.amount = amount;
-        this.date = date;
-        this.notes = notes;
-        this.category = category;
-    }
-
     public Long getId() {
         return id;
     }
@@ -43,12 +40,12 @@ public class Transaction {
         this.id = id;
     }
 
-    public Double getAmount() {
-        return amount;
+    public List<SpendingDetails> getSpendingDetails() {
+        return spendingDetails;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setSpendingDetails(List<SpendingDetails> spendingDetails) {
+        this.spendingDetails = spendingDetails;
     }
 
     public LocalDate getDate() {
