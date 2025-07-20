@@ -152,7 +152,7 @@ public class ChartReportFragment extends Fragment {
             }
         }
 
-        PieDataSet incomeDataSet = new PieDataSet(incomeChartEntries, getString(R.string.income));
+        PieDataSet incomeDataSet = new PieDataSet(incomeChartEntries, getString(R.string.income_categories));
         List<Integer> incomeColors = new ArrayList<>();
         for (int i = 0; i < incomeChartEntries.size(); i++) {
             float hue = (i * 360f / incomeChartEntries.size());
@@ -160,7 +160,7 @@ public class ChartReportFragment extends Fragment {
         }
         incomeDataSet.setColors(incomeColors);
 
-        PieDataSet expenseDataSet = new PieDataSet(expenseChartEntries, getString(R.string.expense));
+        PieDataSet expenseDataSet = new PieDataSet(expenseChartEntries, getString(R.string.expense_categories));
         List<Integer> expenseColors = new ArrayList<>();
         for (int i = 0; i < expenseChartEntries.size(); i++) {
             float hue = ((i * 360f / expenseChartEntries.size()) + 180f) % 360f;
