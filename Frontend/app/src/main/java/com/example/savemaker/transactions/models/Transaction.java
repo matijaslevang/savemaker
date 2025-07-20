@@ -1,6 +1,9 @@
 package com.example.savemaker.transactions.models;
 
+import com.example.savemaker.balance.models.SpendingDetails;
+
 import java.time.LocalDate;
+import java.util.List;
 
 public class Transaction {
 
@@ -8,6 +11,7 @@ public class Transaction {
     private Category category;
     private String notes;
     private Double amount;
+    private List<SpendingDetails> spendingDetails;
     private LocalDate date;
 
     public Transaction() {}
@@ -50,5 +54,13 @@ public class Transaction {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public List<SpendingDetails> getSpendingDetails() {
+        return spendingDetails;
+    }
+
+    public void setSpendingDetails(List<SpendingDetails> spendingDetails) {
+        this.spendingDetails = spendingDetails;
     }
 }
