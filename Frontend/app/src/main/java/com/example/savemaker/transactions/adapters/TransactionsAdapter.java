@@ -12,11 +12,13 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.savemaker.R;
+import com.example.savemaker.balance.models.SpendingDetails;
 import com.example.savemaker.transactions.dialogs.TransactionDetailsDialog;
 import com.example.savemaker.transactions.models.Transaction;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,6 +46,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         Transaction transaction = transactions.get(position);
         holder.id = transaction.getId();
         holder.notes = transaction.getNotes();
+        holder.spendingDetails = transaction.getSpendingDetails();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MM. yyyy.", Locale.getDefault());
         holder.date.setText(transaction.getDate().format(formatter));
         holder.category.setText(transaction.getCategory().getName());
@@ -67,6 +70,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         String notes;
         TextView amount;
         TextView category;
+        List<SpendingDetails> spendingDetails;
 
         public TransactionItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,7 +84,8 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
                         date.getText().toString(),
                         notes,
                         amount.getText().toString(),
-                        category.getText().toString()
+                        category.getText().toString(),
+                        spendingDetails
                 );
                 dialog.show();
             });

@@ -99,6 +99,7 @@ public class HomeFragment extends Fragment {
                                     @Override
                                     public void onFailure(Call<Transaction> call, Throwable t) {
                                         Toast.makeText(getContext(), "Error adding expense!", Toast.LENGTH_SHORT).show();
+                                        Log.wtf("asd", t);
                                     }
                                 }
                         );
