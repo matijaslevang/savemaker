@@ -38,6 +38,13 @@
     <!-- menu labels -->
     <string name="menu_home">Home</string>
 
+    <string name="settings_priority_list_title">Priority List</string>
+    <string name="settings_priority_list_tooltip">Prioritize which income types will be used first by default</string>
+    <string name="settings_priority_list_button">Edit priority list</string>
+    <string name="settings_preferred_priority_title">Preferred priorities</string>
+    <string name="settings_preferred_priority_tooltip">Prioritize which income type will be attempted to be used when creating expenses of each expense category</string>
+    <string name="settings_preferred_priority_button">Edit preferred priority</string>
+
     <string name="priority_list">Priority List</string>
     <string name="priority_list_tooltip">Change the default priority of income type balances by dragging and dropping the elements. Don\'t forget to save!</string>
     <string name="preferred_used_income_category">Preferred used income category</string>
