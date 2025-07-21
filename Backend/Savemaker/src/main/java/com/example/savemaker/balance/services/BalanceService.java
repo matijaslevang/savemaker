@@ -6,6 +6,7 @@ import com.example.savemaker.balance.models.SpendingDetails;
 import com.example.savemaker.balance.repositories.IncomeTypeBalanceRepository;
 import com.example.savemaker.balance.repositories.MainBalanceRepository;
 import com.example.savemaker.balance.repositories.SpendingDetailsRepository;
+import com.example.savemaker.settings.dtos.PriorityListElementDTO;
 import com.example.savemaker.transactions.models.Category;
 import com.example.savemaker.transactions.models.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +84,7 @@ public class BalanceService {
     }
 
     public IncomeTypeBalance getIncomeTypeBalance(Long id) {
-        return incomeTypeBalanceRepository.getReferenceById(id);
+        return incomeTypeBalanceRepository.findById(id).orElse(null);
     }
 
     public IncomeTypeBalance getIncomeTypeBalanceByCategory(@PathVariable Long categoryId) {
@@ -94,6 +95,15 @@ public class BalanceService {
         return incomeTypeBalanceRepository.findAll();
     }
 
+    public boolean updatePriorityList(List<PriorityListElementDTO> updatedList) {
+        for (PriorityListElementDTO priorityListElementDTO : updatedList) {
+            IncomeTypeBalance balance = this.getIncomeTypeBalance(priorityListElementDTO.getIncomeTypeBalanceId());
+            balance.setPriority(priorityListElementDTO.getPriority());
+            incomeTypeBalanceRepository.save(balance);
+        }
+        return true;
+    }
+
     public SpendingDetails createSpendingDetails(Category category, Double amount) {
         SpendingDetails spendingDetails = new SpendingDetails();
         spendingDetails.setCategory(category);
@@ -102,7 +112,7 @@ public class BalanceService {
     }
 
     public List<IncomeTypeBalance> getPriorityList() {
-        return incomeTypeBalanceRepository.findAll();
+        return incomeTypeBalanceRepository.findAllOrderByPriority();
     }
 
 }
