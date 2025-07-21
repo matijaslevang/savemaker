@@ -6,9 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface IncomeTypeBalanceRepository extends JpaRepository<IncomeTypeBalance, Long> {
 
     @Query("SELECT b from IncomeTypeBalance b WHERE b.incomeCategory.id = :categoryId ")
     IncomeTypeBalance findByIncomeCategory(@Param("categoryId") Long categoryId);
+
+    @Query("SELECT b from IncomeTypeBalance b ORDER BY b.priority ASC ")
+    List<IncomeTypeBalance> findAllOrderByPriority();
 }

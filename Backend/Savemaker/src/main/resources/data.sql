@@ -4,9 +4,9 @@ INSERT INTO categories (id, name, is_used_for_income, preferred_spending_categor
                                                                                           (DEFAULT, 'Food', false, 1),
                                                                                           (DEFAULT, 'Transport', false, 1),
                                                                                           (DEFAULT, 'Entertainment', false, 2);
-INSERT INTO income_type_balances (id, category_id, balance) VALUES
-                                                                (DEFAULT, 1, 3000.00),
-                                                                (DEFAULT, 2, 1500.00);
+INSERT INTO income_type_balances (id, category_id, balance, priority) VALUES
+                                                                (DEFAULT, 1, 3000.00, 1),
+                                                                (DEFAULT, 2, 1500.00, 2);
 
 INSERT INTO main_balances (id, total_balance) VALUES
     (1, 4500.00);

@@ -18,6 +18,9 @@ public class IncomeTypeBalance {
     @Column(nullable = false)
     private Double balance;
 
+    @Column(nullable = false)
+    private Integer priority;
+
     public IncomeTypeBalance() {}
 
     public Long getId() {
@@ -42,5 +45,13 @@ public class IncomeTypeBalance {
 
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 }

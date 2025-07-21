@@ -37,4 +37,7 @@
     <string name="to_colon">To:</string>
     <!-- menu labels -->
     <string name="menu_home">Home</string>
+
+    <string name="priority_list">Priority List</string>
+    <string name="priority_list_tooltip">Change the default priority of income type balances by dragging and dropping the elements. Don\'t forget to save!</string>
 </resources>
