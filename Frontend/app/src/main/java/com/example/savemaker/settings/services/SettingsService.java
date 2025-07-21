@@ -1,5 +1,6 @@
 package com.example.savemaker.settings.services;
 
+import com.example.savemaker.settings.models.PreferredPriorityElement;
 import com.example.savemaker.settings.models.PriorityListElement;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface SettingsService {
     Call<List<PriorityListElement>> getPriorityList();
     @PUT(prefix + "/prioritylist")
     Call<Boolean> updatePriorityList(@Body List<PriorityListElement> newList);
+    @GET(prefix + "/preferredpriority")
+    Call<List<PreferredPriorityElement>> getPreferredPriorityList();
+    @PUT(prefix + "/preferredpriority")
+    Call<Boolean> updatePreferredPriorityList(@Body List<PreferredPriorityElement> newList);
 }

@@ -10,11 +10,15 @@ import android.view.ViewGroup;
 
 import com.example.savemaker.R;
 import com.example.savemaker.databinding.FragmentSettingsBinding;
+import com.example.savemaker.settings.dialogs.PreferredPriorityDialog;
 import com.example.savemaker.settings.dialogs.PriorityListDialog;
+import com.example.savemaker.settings.models.PreferredPriorityElement;
 import com.example.savemaker.settings.models.PriorityListElement;
+import com.example.savemaker.transactions.models.Category;
 import com.example.savemaker.utils.ClientUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,6 +56,26 @@ public class SettingsFragment extends Fragment {
 
                         @Override
                         public void onFailure(Call<List<PriorityListElement>> call, Throwable t) {
+
+                        }
+                    }
+            );
+        });
+
+        binding.settingsEditPreferredPriorityButton.setOnClickListener(v -> {
+            Call<List<PreferredPriorityElement>> call = ClientUtils.settingsService.getPreferredPriorityList();
+            call.enqueue(
+                    new Callback<List<PreferredPriorityElement>>() {
+                        @Override
+                        public void onResponse(Call<List<PreferredPriorityElement>> call, Response<List<PreferredPriorityElement>> response) {
+                            if (response.isSuccessful()) {
+                                PreferredPriorityDialog dialog = new PreferredPriorityDialog(requireContext(), response.body(), ClientUtils.allCategories.stream().filter(v -> v.getUsedForIncome()).collect(Collectors.toList()));
+                                dialog.show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<PreferredPriorityElement>> call, Throwable t) {
 
                         }
                     }

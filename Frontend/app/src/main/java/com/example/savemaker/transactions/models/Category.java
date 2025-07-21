@@ -2,6 +2,8 @@ package com.example.savemaker.transactions.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 public class Category {
     private Long id;
     private String name;
@@ -37,5 +39,18 @@ public class Category {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Category that = (Category) obj;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
