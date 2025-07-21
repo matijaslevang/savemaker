@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/dialog_preferred_priority_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/preferred_used_income_category"/>
+
+    <TextView
+        android:id="@+id/dialog_preferred_priority_tooltip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_preferred_priority_title"
+        android:text="@string/preferred_priority_tooltip"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dialog_preferred_priority_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        tools:listitem="@layout/view_holder_priority_list_element"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_preferred_priority_tooltip"/>
+
+    <Button
+        android:id="@+id/dialog_preferred_priority_cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:backgroundTint="@color/savemaker_blue"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_preferred_priority_recycler_view"/>
+
+    <Button
+        android:id="@+id/dialog_preferred_priority_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm"
+        android:backgroundTint="@color/button_dark_green"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toStartOf="@id/dialog_preferred_priority_cancel_button"
+        app:layout_constraintTop_toBottomOf="@id/dialog_preferred_priority_recycler_view"
+        android:layout_marginStart="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
