@@ -10,6 +10,7 @@
 
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
+    <string name="ok">OK</string>
 
     <string name="income">Income</string>
     <string name="expense">Expense</string>
