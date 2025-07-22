@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.savemaker.R;
 import com.example.savemaker.animations.AnimatedCircleView;
+import com.example.savemaker.common.dialogs.NoticeDialog;
 import com.example.savemaker.databinding.FragmentHomeBinding;
 import com.example.savemaker.transactions.adapters.TransactionsAdapter;
 import com.example.savemaker.transactions.dialogs.TransactionCreationDialog;
@@ -98,8 +99,7 @@ public class HomeFragment extends Fragment {
 
                                     @Override
                                     public void onFailure(Call<Transaction> call, Throwable t) {
-                                        Toast.makeText(getContext(), "Error adding expense!", Toast.LENGTH_SHORT).show();
-                                        Log.wtf("asd", t);
+                                        new NoticeDialog(requireContext(), "Error", "Error adding expense!").show();
                                     }
                                 }
                         );
@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
 
                                     @Override
                                     public void onFailure(Call<Transaction> call, Throwable t) {
-                                        Toast.makeText(getContext(), "Error adding income!", Toast.LENGTH_SHORT).show();
+                                        new NoticeDialog(requireContext(), "Error", "Error adding income!").show();
                                     }
                                 }
                         );
@@ -172,7 +172,7 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<List<Category>> call, Throwable t) {
-                        Toast.makeText(getContext(), "Error loading categories!", Toast.LENGTH_SHORT).show();
+                        new NoticeDialog(requireContext(), "Error", "Error loading categories!").show();
                     }
                 }
         );

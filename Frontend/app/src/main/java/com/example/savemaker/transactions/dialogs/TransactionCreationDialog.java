@@ -18,6 +18,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.savemaker.R;
+import com.example.savemaker.common.dialogs.NoticeDialog;
 import com.example.savemaker.databinding.DialogTransactionCreationBinding;
 import com.example.savemaker.transactions.models.Category;
 import com.example.savemaker.transactions.models.Transaction;
@@ -121,7 +122,7 @@ public class TransactionCreationDialog extends Dialog implements View.OnClickLis
 
         confirmButton.setOnClickListener(v -> {
             if (amountInput.getText().toString().isEmpty() || categoryPicker.getSelectedItem() == null) {
-                Toast.makeText(context, "Not all fields are filled!", Toast.LENGTH_SHORT).show();
+                new NoticeDialog(context, "Error", "Not all fields are valid!").show();
             }
             else {
                 Double amount = Double.parseDouble(amountInput.getText().toString());
@@ -130,7 +131,7 @@ public class TransactionCreationDialog extends Dialog implements View.OnClickLis
                 Category category = (Category) categoryPicker.getSelectedItem();
 
                 if (amount > totalBalance && !isUsedForIncome) {
-                    Toast.makeText(context, "You don't have enough money to make that transaction!", Toast.LENGTH_SHORT).show();
+                    new NoticeDialog(context, "Not enough funds", "You do not have enough money to add this expense!").show();
                 } else {
                     if (amount > 0.0) {
                         if (callback != null) {
@@ -138,7 +139,7 @@ public class TransactionCreationDialog extends Dialog implements View.OnClickLis
                         }
                         dismiss();
                     } else {
-                        Toast.makeText(context, "Amount must be bigger than 0!", Toast.LENGTH_SHORT).show();
+                        new NoticeDialog(context, "Invalid input", "Amount must be greater than 0!").show();
                     }
                 }
             }

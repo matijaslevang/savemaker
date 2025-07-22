@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.savemaker.R;
+import com.example.savemaker.common.dialogs.NoticeDialog;
 import com.example.savemaker.databinding.FragmentSimpleReportBinding;
 import com.example.savemaker.transactions.adapters.TransactionsAdapter;
 import com.example.savemaker.transactions.models.Transaction;
@@ -121,7 +122,7 @@ public class SimpleReportFragment extends Fragment {
                         }
                 );
             } else {
-                Toast.makeText(requireContext(), "The end date must be after the beginning date!", Toast.LENGTH_SHORT).show();
+                new NoticeDialog(requireContext(), "Invalid input", "The end date must be after the beginning date!").show();
             }
         }
     }
