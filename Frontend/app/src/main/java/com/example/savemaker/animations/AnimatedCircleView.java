@@ -48,6 +48,11 @@ public class AnimatedCircleView extends View {
         animator.start();
     }
 
+    public void setCircleColor(int color) {
+        paint.setColor(color);
+        invalidate();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

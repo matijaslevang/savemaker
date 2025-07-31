@@ -2,6 +2,7 @@ package com.example.savemaker.balance.adapters;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +37,21 @@ public class IncomeTypeBalanceAdapter extends RecyclerView.Adapter<IncomeTypeBal
         return new IncomeTypeBalanceViewHolder(view);
     }
 
+    private int generateColor(IncomeTypeBalance balance) {
+        int hash = balance.hashCode();
+        float hue = (hash % 360 + 360) % 360;
+        float saturation = 0.8f;
+        float value = 0.9f;
+        return Color.HSVToColor(new float[]{hue, saturation, value});
+    }
+
     @Override
     public void onBindViewHolder(@NonNull IncomeTypeBalanceViewHolder holder, int position) {
         IncomeTypeBalance incomeTypeBalance = balances.get(position);
+        int uniqueColor = generateColor(incomeTypeBalance);
         holder.title.setText(incomeTypeBalance.getTypeName());
+        holder.title.setTextColor(uniqueColor);
+        holder.circle.setCircleColor(uniqueColor);
         drawCircle(holder.circle);
         drawBalance(incomeTypeBalance.getIncomeTypeBalance().floatValue() ,holder.balance);
     }
