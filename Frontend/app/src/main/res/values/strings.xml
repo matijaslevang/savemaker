@@ -39,6 +39,8 @@
     <!-- menu labels -->
     <string name="menu_home">Home</string>
 
+    <string name="no_chart_data_text">No data. Please choose valid dates above.</string>
+
     <string name="settings_priority_list_title">Priority List</string>
     <string name="settings_priority_list_tooltip">Prioritize which income types will be used first by default</string>
     <string name="settings_priority_list_button">Edit priority list</string>

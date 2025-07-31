@@ -62,6 +62,12 @@ public class ChartReportFragment extends Fragment {
         setupDatePickers();
         incomePieChart = binding.reportsChartIncomePieChart;
         expensePieChart = binding.reportsChartExpensePieChart;
+        incomePieChart.setNoDataText(getString(R.string.no_chart_data_text));
+        incomePieChart.setNoDataTextColor(Color.BLACK);
+        incomePieChart.setEntryLabelColor(Color.BLACK);
+        expensePieChart.setNoDataText(getString(R.string.no_chart_data_text));
+        expensePieChart.setNoDataTextColor(Color.BLACK);
+        expensePieChart.setEntryLabelColor(Color.BLACK);
 
         return binding.getRoot();
     }
