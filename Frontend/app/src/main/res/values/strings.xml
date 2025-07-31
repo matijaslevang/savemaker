@@ -49,8 +49,8 @@
     <string name="settings_preferred_priority_button">Edit preferred priority</string>
 
     <string name="priority_list">Priority List</string>
-    <string name="priority_list_tooltip">Change the default priority of income type balances by dragging and dropping the elements. Don\'t forget to save!</string>
+    <string name="priority_list_tooltip">Change the default priority of income type balances by dragging and dropping the elements. Don\'t forget to confirm your changes!</string>
     <string name="preferred_used_income_category">Preferred used income category</string>
-    <string name="preferred_priority_tooltip">Change which category will be first prioritized when adding an expense, which will be attempted before checking the default priority list. Don\'t forget to save!</string>
+    <string name="preferred_priority_tooltip">Change which category will be first prioritized when adding an expense, which will be attempted before checking the default priority list. Don\'t forget to confirm your changes!</string>
 
 </resources>
