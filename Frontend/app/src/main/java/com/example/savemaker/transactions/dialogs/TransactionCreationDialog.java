@@ -121,10 +121,12 @@ public class TransactionCreationDialog extends Dialog implements View.OnClickLis
         cancelButton.setOnClickListener(this);
 
         confirmButton.setOnClickListener(v -> {
-            if (amountInput.getText().toString().isEmpty() || categoryPicker.getSelectedItem() == null) {
-                new NoticeDialog(context, "Error", "Not all fields are valid!").show();
-            }
-            else {
+
+            if (categoryPicker.getSelectedItem() == null) {
+                new NoticeDialog(context, "Category is required", "You must pick a category!").show();
+            } else if (amountInput.getText().toString().isEmpty()) {
+                new NoticeDialog(context, "Amount is required", "You must insert the transaction amount!").show();
+            } else {
                 Double amount = Double.parseDouble(amountInput.getText().toString());
                 String notes = notesInput.getText().toString();
                 LocalDate date = LocalDate.parse(datePicker.getText().toString(), java.time.format.DateTimeFormatter.ofPattern("dd. MM. yyyy."));
@@ -139,7 +141,7 @@ public class TransactionCreationDialog extends Dialog implements View.OnClickLis
                         }
                         dismiss();
                     } else {
-                        new NoticeDialog(context, "Invalid input", "Amount must be greater than 0!").show();
+                        new NoticeDialog(context, "Invalid amount", "Amount must be greater than 0!").show();
                     }
                 }
             }

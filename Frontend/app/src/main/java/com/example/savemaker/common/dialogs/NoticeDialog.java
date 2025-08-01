@@ -45,7 +45,7 @@ public class NoticeDialog extends Dialog implements View.OnClickListener {
                     (int)(getContext().getResources().getDisplayMetrics().widthPixels * 0.9),
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
-            getWindow().getAttributes().height = Math.max(getContext().getResources().getDisplayMetrics().heightPixels / 2, getWindow().getAttributes().height);
+            getWindow().getAttributes().height = Math.max(getContext().getResources().getDisplayMetrics().heightPixels / 4, getWindow().getAttributes().height);
         }
     }
 
