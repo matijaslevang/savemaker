@@ -53,10 +53,10 @@ public class BalanceService {
                 if (incomeTypeBalance.getBalance() >= amount) {
                     incomeTypeBalance.setBalance(incomeTypeBalance.getBalance() - amount);
                     incomeTypeBalanceRepository.save(incomeTypeBalance);
-                    spendingDetailsList.add(this.createSpendingDetails(category, amount));
+                    spendingDetailsList.add(this.createSpendingDetails(incomeTypeBalance.getIncomeCategory(), amount));
                 } else {
                     amount -= incomeTypeBalance.getBalance();
-                    spendingDetailsList.add(this.createSpendingDetails(category, incomeTypeBalance.getBalance()));
+                    spendingDetailsList.add(this.createSpendingDetails(incomeTypeBalance.getIncomeCategory(), incomeTypeBalance.getBalance()));
                     incomeTypeBalance.setBalance(0.0);
                     incomeTypeBalanceRepository.save(incomeTypeBalance);
 
